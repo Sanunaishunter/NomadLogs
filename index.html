@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NomadLogs · 我的日記</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- 側邊欄 -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">✎</span>
+        <div>
+          <h1>NomadLogs</h1>
+          <p>記錄每一天的足跡</p>
+        </div>
+      </div>
+
+      <button id="newEntryBtn" class="btn-primary">
+        <span>＋</span> 寫新日記
+      </button>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input id="searchInput" type="text" placeholder="搜尋日記..." />
+      </div>
+
+      <div class="mood-filter" id="moodFilter">
+        <button class="mood-chip active" data-mood="all">全部</button>
+        <button class="mood-chip" data-mood="😊">😊 開心</button>
+        <button class="mood-chip" data-mood="😌">😌 平靜</button>
+        <button class="mood-chip" data-mood="😔">😔 低落</button>
+        <button class="mood-chip" data-mood="🤩">🤩 興奮</button>
+        <button class="mood-chip" data-mood="😴">😴 疲憊</button>
+      </div>
+
+      <div class="entry-list" id="entryList"></div>
+
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="btn-ghost" title="切換深色模式">🌙 深色模式</button>
+        <button id="exportBtn" class="btn-ghost" title="匯出所有日記">⬇ 匯出</button>
+      </div>
+    </aside>
+
+    <!-- 主要內容區 -->
+    <main class="content">
+      <div id="emptyState" class="empty-state">
+        <div class="empty-illustration">📔</div>
+        <h2>還沒有日記</h2>
+        <p>點選左側「寫新日記」，開始記錄你的旅程與心情</p>
+        <button class="btn-primary" id="emptyNewEntryBtn">＋ 寫下第一篇日記</button>
+      </div>
+
+      <div id="editorView" class="editor hidden">
+        <div class="editor-header">
+          <input id="entryTitle" class="entry-title-input" placeholder="今天想標題叫什麼呢？" />
+          <div class="editor-meta">
+            <input id="entryDate" type="date" />
+            <input id="entryLocation" type="text" placeholder="📍 地點（選填）" />
+          </div>
+          <div class="mood-picker" id="moodPicker">
+            <button type="button" data-mood="😊">😊</button>
+            <button type="button" data-mood="😌">😌</button>
+            <button type="button" data-mood="😔">😔</button>
+            <button type="button" data-mood="🤩">🤩</button>
+            <button type="button" data-mood="😴">😴</button>
+          </div>
+        </div>
+        <textarea id="entryContent" placeholder="寫下今天發生的事、想法或感受..."></textarea>
+        <div class="editor-footer">
+          <span id="wordCount" class="word-count">0 字</span>
+          <div class="editor-actions">
+            <button id="deleteBtn" class="btn-danger hidden">刪除</button>
+            <button id="cancelBtn" class="btn-ghost">取消</button>
+            <button id="saveBtn" class="btn-primary">儲存日記</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="readView" class="read-view hidden">
+        <div class="read-header">
+          <div class="read-header-top">
+            <span id="readMood" class="read-mood"></span>
+            <div class="read-actions">
+              <button id="editBtn" class="btn-ghost">✎ 編輯</button>
+            </div>
+          </div>
+          <h2 id="readTitle"></h2>
+          <div class="read-meta">
+            <span id="readDate"></span>
+            <span id="readLocation"></span>
+          </div>
+        </div>
+        <div id="readContent" class="read-content"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
