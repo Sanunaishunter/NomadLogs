@@ -42,6 +42,39 @@ body {
   height: 100vh;
 }
 
+/* ---------- Password corner ---------- */
+body {
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+.password-corner {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+}
+
+.password-corner input {
+  font-family: var(--font);
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  width: 110px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, border-color 0.15s ease, width 0.15s ease;
+}
+.password-corner input:focus,
+.password-corner input:not(:placeholder-shown) {
+  opacity: 1;
+  border-color: var(--accent);
+  width: 150px;
+}
+
 /* ---------- Sidebar ---------- */
 .sidebar {
   background: var(--sidebar-bg);

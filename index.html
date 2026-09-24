@@ -9,7 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="app">
+  <div id="passwordCorner" class="password-corner">
+    <input id="lockPassword" type="password" placeholder="密碼" autocomplete="off" />
+  </div>
+
+  <div class="app hidden" id="appRoot">
     <!-- 側邊欄 -->
     <aside class="sidebar">
       <div class="brand">

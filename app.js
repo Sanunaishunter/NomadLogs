@@ -1,4 +1,30 @@
 (() => {
+  const PASSWORD = '16696001277431815';
+  const UNLOCK_KEY = 'nomadlogs.unlocked';
+
+  const passwordCorner = document.getElementById('passwordCorner');
+  const appRoot = document.getElementById('appRoot');
+  const lockPassword = document.getElementById('lockPassword');
+
+  function unlock() {
+    sessionStorage.setItem(UNLOCK_KEY, 'true');
+    passwordCorner.classList.add('hidden');
+    appRoot.classList.remove('hidden');
+  }
+
+  if (sessionStorage.getItem(UNLOCK_KEY) === 'true') {
+    unlock();
+  }
+
+  lockPassword.addEventListener('input', () => {
+    if (lockPassword.value === PASSWORD) {
+      lockPassword.value = '';
+      unlock();
+    }
+  });
+})();
+
+(() => {
   const STORAGE_KEY = 'nomadlogs.entries';
   const THEME_KEY = 'nomadlogs.theme';
 
