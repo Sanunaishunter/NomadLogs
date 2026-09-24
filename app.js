@@ -21,16 +21,16 @@
   }
 
   function login() {
-    sessionStorage.removeItem(LOGGED_OUT_KEY);
+    localStorage.removeItem(LOGGED_OUT_KEY);
     appRoot.classList.remove('hidden');
   }
 
   function logout() {
-    sessionStorage.setItem(LOGGED_OUT_KEY, 'true');
+    localStorage.setItem(LOGGED_OUT_KEY, 'true');
     appRoot.classList.add('hidden');
   }
 
-  if (sessionStorage.getItem(LOGGED_OUT_KEY) === 'true') {
+  if (localStorage.getItem(LOGGED_OUT_KEY) === 'true') {
     appRoot.classList.add('hidden');
   }
 
