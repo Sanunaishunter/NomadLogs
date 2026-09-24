@@ -10,10 +10,12 @@
 </head>
 <body>
   <div id="passwordCorner" class="password-corner">
-    <input id="lockPassword" type="password" placeholder="密碼" autocomplete="off" />
+    <button id="passwordTrigger" class="password-trigger" type="button" aria-label="密碼"></button>
+    <input id="lockPassword" class="hidden" type="password" placeholder="密碼" autocomplete="off" />
+    <span id="passwordConfirm" class="password-confirm hidden">✓</span>
   </div>
 
-  <div class="app hidden" id="appRoot">
+  <div class="app" id="appRoot">
     <!-- 側邊欄 -->
     <aside class="sidebar">
       <div class="brand">

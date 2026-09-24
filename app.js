@@ -1,25 +1,31 @@
 (() => {
   const PASSWORD = '16696001277431815';
-  const UNLOCK_KEY = 'nomadlogs.unlocked';
 
-  const passwordCorner = document.getElementById('passwordCorner');
-  const appRoot = document.getElementById('appRoot');
+  const trigger = document.getElementById('passwordTrigger');
   const lockPassword = document.getElementById('lockPassword');
+  const confirmMark = document.getElementById('passwordConfirm');
 
-  function unlock() {
-    sessionStorage.setItem(UNLOCK_KEY, 'true');
-    passwordCorner.classList.add('hidden');
-    appRoot.classList.remove('hidden');
+  function showInput() {
+    trigger.classList.add('hidden');
+    lockPassword.classList.remove('hidden');
+    lockPassword.focus();
   }
 
-  if (sessionStorage.getItem(UNLOCK_KEY) === 'true') {
-    unlock();
+  function hideInput() {
+    lockPassword.classList.add('hidden');
+    lockPassword.value = '';
+    trigger.classList.remove('hidden');
   }
+
+  trigger.addEventListener('click', showInput);
+
+  lockPassword.addEventListener('blur', hideInput);
 
   lockPassword.addEventListener('input', () => {
     if (lockPassword.value === PASSWORD) {
-      lockPassword.value = '';
-      unlock();
+      hideInput();
+      confirmMark.classList.remove('hidden');
+      setTimeout(() => confirmMark.classList.add('hidden'), 1200);
     }
   });
 })();
