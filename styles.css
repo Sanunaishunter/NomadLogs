@@ -99,6 +99,9 @@ body {
   gap: 16px;
   overflow: hidden;
 }
+.sidebar > *:not(.entry-list) {
+  flex-shrink: 0;
+}
 
 .brand {
   display: flex;
@@ -220,6 +223,7 @@ body {
 
 .entry-list {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -433,6 +437,6 @@ body {
 /* Responsive */
 @media (max-width: 860px) {
   .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-  .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 45vh; }
+  .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; }
   .content { padding: 24px 20px; }
 }
