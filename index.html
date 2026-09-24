@@ -18,38 +18,43 @@
   <div class="app" id="appRoot">
     <!-- 側邊欄 -->
     <aside class="sidebar">
-      <div class="brand">
-        <span class="brand-mark">✎</span>
-        <div>
-          <h1>NomadLogs</h1>
-          <p>記錄每一天的足跡</p>
+      <div class="sidebar-bar">
+        <button id="sidebarToggle" class="sidebar-toggle" type="button" title="收合／展開側邊欄" aria-expanded="true">⤢</button>
+        <button id="newEntryBtn" class="btn-primary">
+          <span>＋</span> 寫新日記
+        </button>
+      </div>
+
+      <div class="sidebar-extra" id="sidebarExtra">
+        <div class="brand">
+          <span class="brand-mark">✎</span>
+          <div>
+            <h1>NomadLogs</h1>
+            <p>記錄每一天的足跡</p>
+          </div>
         </div>
-      </div>
 
-      <button id="newEntryBtn" class="btn-primary">
-        <span>＋</span> 寫新日記
-      </button>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input id="searchInput" type="text" placeholder="搜尋日記..." />
+        </div>
 
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input id="searchInput" type="text" placeholder="搜尋日記..." />
-      </div>
+        <div class="mood-filter" id="moodFilter">
+          <button class="mood-chip active" data-mood="all">全部</button>
+          <button class="mood-chip" data-mood="😊">😊 開心</button>
+          <button class="mood-chip" data-mood="😌">😌 平靜</button>
+          <button class="mood-chip" data-mood="😔">😔 低落</button>
+          <button class="mood-chip" data-mood="🤩">🤩 興奮</button>
+          <button class="mood-chip" data-mood="😴">😴 疲憊</button>
+        </div>
 
-      <div class="mood-filter" id="moodFilter">
-        <button class="mood-chip active" data-mood="all">全部</button>
-        <button class="mood-chip" data-mood="😊">😊 開心</button>
-        <button class="mood-chip" data-mood="😌">😌 平靜</button>
-        <button class="mood-chip" data-mood="😔">😔 低落</button>
-        <button class="mood-chip" data-mood="🤩">🤩 興奮</button>
-        <button class="mood-chip" data-mood="😴">😴 疲憊</button>
-      </div>
+        <div class="entry-list" id="entryList"></div>
 
-      <div class="entry-list" id="entryList"></div>
-
-      <div class="sidebar-footer">
-        <button id="themeToggle" class="btn-ghost" title="切換深色模式">🌙 深色模式</button>
-        <button id="exportBtn" class="btn-ghost" title="匯出所有日記">⬇ 匯出</button>
-        <button id="logoutBtn" class="btn-ghost" title="登出">🚪 登出</button>
+        <div class="sidebar-footer">
+          <button id="themeToggle" class="btn-ghost" title="切換深色模式">🌙 深色模式</button>
+          <button id="exportBtn" class="btn-ghost" title="匯出所有日記">⬇ 匯出</button>
+          <button id="logoutBtn" class="btn-ghost" title="登出">🚪 登出</button>
+        </div>
       </div>
     </aside>
 

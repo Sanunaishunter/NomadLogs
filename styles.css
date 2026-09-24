@@ -40,6 +40,10 @@ body {
   display: grid;
   grid-template-columns: 340px 1fr;
   height: 100vh;
+  transition: grid-template-columns 0.2s ease;
+}
+.app.sidebar-collapsed {
+  grid-template-columns: 230px 1fr;
 }
 
 /* ---------- Password corner ---------- */
@@ -99,7 +103,45 @@ body {
   gap: 16px;
   overflow: hidden;
 }
-.sidebar > *:not(.entry-list) {
+
+.sidebar-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.sidebar-bar .btn-primary {
+  flex: 1;
+  padding: 12px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-toggle {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.sidebar-toggle:hover {
+  background: var(--accent-soft);
+}
+
+.sidebar-extra {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+.sidebar-extra > *:not(.entry-list) {
   flex-shrink: 0;
 }
 
@@ -436,7 +478,8 @@ body {
 
 /* Responsive */
 @media (max-width: 860px) {
-  .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .app,
+  .app.sidebar-collapsed { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
   .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; }
   .content { padding: 24px 20px; }
 }

@@ -264,6 +264,29 @@
     }
   }
 
+  // ---------- Sidebar collapse ----------
+  const SIDEBAR_KEY = 'nomadlogs.sidebarCollapsed';
+  const sidebarExtra = el('sidebarExtra');
+  const sidebarToggle = el('sidebarToggle');
+  const appRoot = el('appRoot');
+
+  function setSidebarCollapsed(collapsed) {
+    sidebarExtra.classList.toggle('hidden', collapsed);
+    appRoot.classList.toggle('sidebar-collapsed', collapsed);
+    sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+    sidebarToggle.textContent = collapsed ? '»' : '«';
+  }
+
+  function initSidebar() {
+    setSidebarCollapsed(localStorage.getItem(SIDEBAR_KEY) === 'true');
+  }
+
+  sidebarToggle.addEventListener('click', () => {
+    const nowCollapsed = !sidebarExtra.classList.contains('hidden');
+    localStorage.setItem(SIDEBAR_KEY, String(nowCollapsed));
+    setSidebarCollapsed(nowCollapsed);
+  });
+
   // ---------- Theme ----------
   function initTheme() {
     const saved = localStorage.getItem(THEME_KEY);
@@ -347,6 +370,7 @@
 
   // ---------- Init ----------
   initTheme();
+  initSidebar();
   renderList();
   const first = getFilteredEntries()[0];
   if (first) {
