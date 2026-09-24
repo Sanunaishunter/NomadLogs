@@ -1,9 +1,12 @@
 (() => {
   const PASSWORD = '16696001277431815';
+  const LOGGED_OUT_KEY = 'nomadlogs.loggedOut';
 
   const trigger = document.getElementById('passwordTrigger');
   const lockPassword = document.getElementById('lockPassword');
   const confirmMark = document.getElementById('passwordConfirm');
+  const appRoot = document.getElementById('appRoot');
+  const logoutBtn = document.getElementById('logoutBtn');
 
   function showInput() {
     trigger.classList.add('hidden');
@@ -17,6 +20,20 @@
     trigger.classList.remove('hidden');
   }
 
+  function login() {
+    sessionStorage.removeItem(LOGGED_OUT_KEY);
+    appRoot.classList.remove('hidden');
+  }
+
+  function logout() {
+    sessionStorage.setItem(LOGGED_OUT_KEY, 'true');
+    appRoot.classList.add('hidden');
+  }
+
+  if (sessionStorage.getItem(LOGGED_OUT_KEY) === 'true') {
+    appRoot.classList.add('hidden');
+  }
+
   trigger.addEventListener('click', showInput);
 
   lockPassword.addEventListener('blur', hideInput);
@@ -26,8 +43,11 @@
       hideInput();
       confirmMark.classList.remove('hidden');
       setTimeout(() => confirmMark.classList.add('hidden'), 1200);
+      login();
     }
   });
+
+  logoutBtn.addEventListener('click', logout);
 })();
 
 (() => {

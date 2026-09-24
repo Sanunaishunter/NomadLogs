@@ -280,11 +280,18 @@ body {
 
 .sidebar-footer {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   border-top: 1px solid var(--border);
   padding-top: 14px;
 }
-.sidebar-footer button { flex: 1; }
+.sidebar-footer button {
+  flex: 1;
+  min-width: 88px;
+  padding: 8px 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
 
 /* ---------- Main content ---------- */
 .content {
