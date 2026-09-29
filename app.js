@@ -309,23 +309,84 @@
     }
   }
 
-  // ---------- Export ----------
+  // ---------- Export / Import ----------
   function exportEntries() {
     if (!state.entries.length) {
       alert('目前沒有日記可以匯出。');
       return;
     }
-    const sorted = [...state.entries].sort((a, b) => a.date.localeCompare(b.date));
-    const text = sorted
-      .map((e) => `# ${e.title || '無標題'} ${e.mood || ''}\n${formatDate(e.date)}${e.location ? ' · 📍 ' + e.location : ''}\n\n${e.content}\n`)
-      .join('\n---\n\n');
-    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const payload = {
+      app: 'nomadlogs',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      entries: state.entries,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `nomadlogs-export-${todayISO()}.txt`;
+    a.download = `nomadlogs-backup-${todayISO()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  function importEntries(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      let data;
+      try {
+        data = JSON.parse(reader.result);
+      } catch (e) {
+        alert('匯入失敗：不是有效的 JSON 檔案。');
+        return;
+      }
+      const incoming = Array.isArray(data) ? data : data.entries;
+      if (!Array.isArray(incoming)) {
+        alert('匯入失敗：檔案格式不正確。');
+        return;
+      }
+
+      let added = 0;
+      let updated = 0;
+      for (const raw of incoming) {
+        if (!raw || typeof raw !== 'object') continue;
+        const title = typeof raw.title === 'string' ? raw.title : '';
+        const content = typeof raw.content === 'string' ? raw.content : '';
+        if (!title && !content) continue;
+
+        const entry = {
+          id: typeof raw.id === 'string' && raw.id ? raw.id : uid(),
+          title,
+          content,
+          date: typeof raw.date === 'string' && raw.date ? raw.date : todayISO(),
+          location: typeof raw.location === 'string' ? raw.location : '',
+          mood: typeof raw.mood === 'string' && raw.mood ? raw.mood : '😊',
+          updatedAt: typeof raw.updatedAt === 'number' ? raw.updatedAt : Date.now(),
+        };
+
+        const existingIndex = state.entries.findIndex((e) => e.id === entry.id);
+        if (existingIndex >= 0) {
+          state.entries[existingIndex] = entry;
+          updated++;
+        } else {
+          state.entries.push(entry);
+          added++;
+        }
+      }
+
+      if (added === 0 && updated === 0) {
+        alert('這個檔案裡沒有可以匯入的日記。');
+        return;
+      }
+
+      saveEntries();
+      renderList();
+      const first = getFilteredEntries()[0];
+      if (first) openReadView(first.id);
+      alert(`匯入完成：新增 ${added} 篇，更新 ${updated} 篇。`);
+    };
+    reader.onerror = () => alert('匯入失敗：無法讀取檔案。');
+    reader.readAsText(file);
   }
 
   // ---------- Events ----------
@@ -337,6 +398,12 @@
   el('editBtn').addEventListener('click', () => openEditor(state.activeId));
   el('themeToggle').addEventListener('click', toggleTheme);
   el('exportBtn').addEventListener('click', exportEntries);
+  el('importBtn').addEventListener('click', () => el('importInput').click());
+  el('importInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) importEntries(file);
+    e.target.value = '';
+  });
 
   entryContent.addEventListener('input', updateWordCount);
 
